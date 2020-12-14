@@ -1,44 +1,52 @@
-import React, { Component } from 'react';
-import Notes from './components/Notes';
-import AddNote from './components//AddNote';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import React, {useState, useEffect} from 'react'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import List from './components/List.js'
+import Editor from './components/Editor.js'
+import Form from './components/Form'
+import Jumbotron from 'react-bootstrap/Jumbotron'
+import Button from 'react-bootstrap/Button'
+// import * as N from './utils/noteHelpers'
+import {getNotes} from './utils/noteHelpers.js'
 
-class App extends Component {
-  state = {
-    notes: [
-      {id: 1, content:'Note 1'},
-      {id: 2, content:'Note 2'},
-      {id: 3, content:'Note 3'}
+function App() {
+  const [selectedNote, setSelectedNote] = useState(undefined)
+  const [notes, setNotes] = useState([])
 
-    ]
+  useEffect(() => {
+    const notes = getNotes()
+    setNotes(notes)
+  }, [])
+
+  const refreshList = () => {
+    setSelectedNote(undefined)
+    const notes = getNotes()
+    setNotes([...notes])
   }
-  showNote = (id) => {
-    console.log(id);
-  }
-  addNote = (note) => {
-    note.id = Math.random();
-    let notes = [...this.state.notes, note];
-    this.setState({
-      notes
-    });
-  }
-  deleteNote = (id) => {
-    const notes = this.state.notes.filter(note => {
-      return note.id !== id
-    });
-    this.setState({
-      notes
-    })
-  }
-  render() {
-    return (
-      <div className="note-taker-app container">
-        <AddNote addNote={this.addNote} className="my-5"/>
-        <h1 className="text-center text-primary">Notes</h1>
-        <Notes notes={this.state.notes} deleteNote={this.deleteNote} />    
-      </div>
-    );
-  }
+
+  const onClickNewNote = () => setSelectedNote(undefined)
+
+  return (
+    <Container>
+      <Jumbotron>
+        <h1>Notes</h1>
+      </Jumbotron>
+      <Row>
+        <Col xs={12} md={4}>
+          <Button onClick={onClickNewNote} variant="dark" block className="mb-3">
+            New note
+          </Button>
+          <List notes={notes} selectedNote={selectedNote} setSelectedNote={setSelectedNote} />
+        </Col>
+        <Col xs={12} md={8}>
+          <Form refreshList={refreshList} selectedNote={selectedNote} />
+          {/* <Editor /> */}
+        </Col>
+      </Row>
+    </Container>
+  )
 }
 
-export default App;
+export default App
