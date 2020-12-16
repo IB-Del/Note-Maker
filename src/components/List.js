@@ -7,7 +7,7 @@ export default function List({selectedNote, setSelectedNote, notes}) {
   }
 
   if (!notes) return null
-  if (!notes.length) return <p>Your note list is empty</p>
+  if (!notes.length) return <p>list empty</p>
   return (
     <ListGroup as="ul" className="mb-3">
       {notes.map((note, index) => (
