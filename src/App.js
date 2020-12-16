@@ -4,10 +4,12 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import List from './components/List.js'
-import Form from './components/Form.js'
+import Editor from './components/Editor.js'
+import Form from './components/Form'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Button from 'react-bootstrap/Button'
-import {getNotes} from './utils/noteHelpers'
+// import * as N from './utils/noteHelpers'
+import {getNotes} from './utils/noteHelpers.js'
 
 function App() {
   const [selectedNote, setSelectedNote] = useState(undefined)
