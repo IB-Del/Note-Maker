@@ -1,21 +1,18 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
-import Form from '../components/Form'
-import {getNotes, createNote} from '../utils/noteHelpers'
-
-
 
 export default function List({selectedNote, setSelectedNote, notes}) {
-  const jsonNoteArray = JSON.stringify(notes)
   const onSelectNote = (note) => {
     setSelectedNote(note)
   }
-  console.log('notes', notes)
+
+  if (!notes) return null
+  if (!notes.length) return <p>Your note list is empty</p>
   return (
-    <ListGroup as="ul">
+    <ListGroup as="ul" className="mb-3">
       {notes.map((note, index) => (
         <ListGroup.Item
-          active={selectedNote ? note.id === selectedNote.id : null}
+          active={selectedNote ? note.id === selectedNote.id : false}
           onClick={() => onSelectNote(note)}
           as="li"
         >
